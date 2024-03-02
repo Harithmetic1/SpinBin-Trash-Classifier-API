@@ -1,7 +1,7 @@
 annotated-types==0.6.0
 fastapi==0.110.0
 Jinja2==3.1.3
-opencv-python-headless==4.8.0.7
+opencv-python-headless==4.8.0.74
 uvicorn==0.27.1
 yolov5==7.0.13
 
