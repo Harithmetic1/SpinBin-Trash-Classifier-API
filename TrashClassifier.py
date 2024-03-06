@@ -1,7 +1,7 @@
 import os
 import yolov5
 
-MODEL_REF= os.path.join(os.getcwd(), "/ai-model/yolov5s.pt")
+MODEL_REF= os.path.join(os.getcwd(), "./ai-model/yolov5s.pt")
 
 class TrashClassifier:
     def __init__(self) -> None:

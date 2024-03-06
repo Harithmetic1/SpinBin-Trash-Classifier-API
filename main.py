@@ -1,8 +1,10 @@
 import os
-import cv2
+# import cv2
+from PIL import Image
 from typing import Union
 
 from fastapi import FastAPI, File, UploadFile
+import uvicorn
 
 from TrashClassifier import TrashClassifier
 
@@ -27,7 +29,7 @@ async def classify_waste(img: UploadFile = File(...)):
     with open(file_path, "wb") as f:
         f.write(img)
     try:
-         class_img = cv2.imread(file_path)
+         class_img = Image.open(file_path)
          classification = classifier.classify(class_img)
          if classification == "metal":
             return { "classification": "metal"}
@@ -40,3 +42,6 @@ async def classify_waste(img: UploadFile = File(...)):
     except Exception as e:
         return {"error": str(e)}
 
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8080)
