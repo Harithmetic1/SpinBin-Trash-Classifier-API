@@ -1,6 +1,7 @@
 import os
 # import cv2
 from PIL import Image
+import base64
 from typing import Union
 
 from fastapi import FastAPI, File, UploadFile
@@ -44,11 +45,15 @@ async def classify_waste(img: UploadFile = File(...)):
 
 @app.post("/classifybase64")
 async def classify_waste_b64(img: str):
-    # Create a new file called "pic" in the current directory
-    file_path = os.path.join(os.getcwd(), "pic.png")
-    with open(file_path, "wb") as f:
-        f.write(img)
     try:
+         # Decode the base64 string into binary data
+         img_data = base64.b64decode(img)
+
+         # Create a new file called "pic" in the current directory
+         file_path = os.path.join(os.getcwd(), "pic.png")
+         with open(file_path, "wb") as f:
+            f.write(img_data)
+
          class_img = Image.open(file_path)
          classification = classifier.classify(class_img)
          if classification == "metal":
