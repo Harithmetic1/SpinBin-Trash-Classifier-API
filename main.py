@@ -42,6 +42,25 @@ async def classify_waste(img: UploadFile = File(...)):
     except Exception as e:
         return {"error": str(e)}
 
+@app.post("/classifybase64")
+async def classify_waste_b64(img: str):
+    # Create a new file called "pic" in the current directory
+    file_path = os.path.join(os.getcwd(), "pic.png")
+    with open(file_path, "wb") as f:
+        f.write(img)
+    try:
+         class_img = Image.open(file_path)
+         classification = classifier.classify(class_img)
+         if classification == "metal":
+            return { "classification": "metal"}
+         elif classification == "paper":
+            return {"classification": "paper"}
+         elif classification == "plastic":
+            return {"classification": "plastic"}
+         elif classification == "glass":
+            return {"classification": "glass"}
+    except Exception as e:
+        return {"error": str(e)}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)
