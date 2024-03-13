@@ -2,6 +2,7 @@ import os
 import yolov5
 
 MODEL_REF= os.path.join(os.getcwd(), "./ai-model/yolov5s.pt")
+ONLINE_MODEL_REF = "turhancan97/yolov5-detect-trash-classification"
 
 class TrashClassifier:
     def __init__(self) -> None:

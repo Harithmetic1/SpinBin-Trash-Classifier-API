@@ -5,6 +5,7 @@ import base64
 from typing import Union
 
 from fastapi import FastAPI, File, UploadFile
+from model import UploadImageSchema
 import uvicorn
 
 from TrashClassifier import TrashClassifier
@@ -43,11 +44,11 @@ async def classify_waste(img: UploadFile = File(...)):
     except Exception as e:
         return {"error": str(e)}
 
-@app.post("/classifybase64")
-async def classify_waste_b64(img: str):
+@app.post("/classifybase64", response_model=dict)
+async def classify_waste_b64(img: UploadImageSchema):
     try:
          # Decode the base64 string into binary data
-         img_data = base64.b64decode(img)
+         img_data = base64.b64decode(img.img)
 
          # Create a new file called "pic" in the current directory
          file_path = os.path.join(os.getcwd(), "pic.png")
