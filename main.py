@@ -65,6 +65,8 @@ async def classify_waste_b64(img: UploadImageSchema):
             return {"classification": "plastic"}
          elif classification == "glass":
             return {"classification": "glass"}
+         else:
+            return {"classification": "unknown"}
     except Exception as e:
         return {"error": str(e)}
 
