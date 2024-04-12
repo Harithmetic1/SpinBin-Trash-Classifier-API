@@ -1,5 +1,6 @@
 import os
 import yolov5
+import cv2
 
 MODEL_REF= os.path.join(os.getcwd(), "./ai-model/yolov5s.pt")
 ONLINE_MODEL_REF = "turhancan97/yolov5-detect-trash-classification"
@@ -42,16 +43,28 @@ class TrashClassifier:
 
         #paper = 2., plastic = 3., metal = 1., glass = 4.
 
-        if highest_score_class == 1.:
-                return 'metal'
-        elif highest_score_class == 2.:
-                return 'paper'
-        elif highest_score_class == 3.:
-            return 'plastic' 
-        elif highest_score_class == 0.:
-            return 'glass'
+        
+
+        try:
+            if highest_score_class == 1.:
+                    text = 'metal'
+            elif highest_score_class == 2.:
+                    text = 'paper'
+            elif highest_score_class == 3.:
+                text = 'plastic' 
+            elif highest_score_class == 0.:
+                text = 'glass'
+            img_b = cv2.imread(os.path.join(os.getcwd(), "pic.png"))
+            cv2.rectangle(img_b, (int(boxes[highest_score_index][0]), int(boxes[highest_score_index][1])), (int(boxes[highest_score_index][2]), int(boxes[highest_score_index][3])), (0, 255,0), 2)
+            cv2.putText(img_b, text, (int(boxes[highest_score_index][0]), int(boxes[highest_score_index][1])), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+            cv2.imwrite(os.path.join(os.getcwd(), "result.png"), img_b)
+        except Exception as e:
+             print(f"Could not write to file: {e}")
+
+        if text:
+             return text
         else:
-            return None
+             return None
 
 
 
