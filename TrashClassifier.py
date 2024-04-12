@@ -39,12 +39,8 @@ class TrashClassifier:
         highest_score_index = scores.argmax()
         highest_score_class = categories[highest_score_index]
 
-        # print(f"Categories: {highest_score_class}, {predictions} scores: {categories}")
 
         #paper = 2., plastic = 3., metal = 1., glass = 4.
-        
-        # results.show()
-        # results.print()
 
         if highest_score_class == 1.:
                 return 'metal'

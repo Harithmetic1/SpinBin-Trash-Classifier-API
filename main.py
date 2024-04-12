@@ -5,6 +5,8 @@ import base64
 from typing import Union
 
 from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import FileResponse
+from pathlib import Path
 from model import UploadImageSchema
 import uvicorn
 
@@ -69,6 +71,15 @@ async def classify_waste_b64(img: UploadImageSchema):
             return {"classification": "unknown"}
     except Exception as e:
         return {"error": str(e)}
+    
+@app.get("/get_image")
+async def getImage():
+    image_path = Path(os.path.join(os.getcwd(), "pic.png"))
+    if not image_path.is_file():
+        return {
+            "error": "Image not found on server"
+        }
+    return FileResponse(image_path)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)
