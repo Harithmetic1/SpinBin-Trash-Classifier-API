@@ -40,10 +40,9 @@ class TrashClassifier:
         highest_score_index = scores.argmax()
         highest_score_class = categories[highest_score_index]
 
+        text = None
 
         #paper = 2., plastic = 3., metal = 1., glass = 4.
-
-        
 
         try:
             if highest_score_class == 1.:
@@ -62,6 +61,7 @@ class TrashClassifier:
              print(f"Could not write to file: {e}")
 
         if text:
+             print(text)
              return text
         else:
              return None

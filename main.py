@@ -72,9 +72,12 @@ async def classify_waste_b64(img: UploadImageSchema):
     except Exception as e:
         return {"error": str(e)}
     
-@app.get("/get_image")
-async def getImage():
-    image_path = Path(os.path.join(os.getcwd(), "result.png"))
+@app.get("/get_image/{img_type}")
+async def getImage(img_type: str):
+    if img_type.lower() == "pic":
+        image_path = Path(os.path.join(os.getcwd(), "pic.png"))
+    else:
+       image_path = Path(os.path.join(os.getcwd(), "result.png"))
     if not image_path.is_file():
         return {
             "error": "Image not found on server"
