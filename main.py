@@ -10,19 +10,16 @@ from pathlib import Path
 from model import UploadImageSchema
 import uvicorn
 
-from TrashClassifier import TrashClassifier
+from TrashClassifier import TrashClassifier, TrashClassifierV8
 
 app = FastAPI()
 
-classifier = TrashClassifier()
+# classifierHF = TrashClassifier()
+classifier = TrashClassifierV8()
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
 
 @app.post("/classify")
 async def classify_waste(img: UploadFile = File(...)):

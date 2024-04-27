@@ -5,4 +5,5 @@ opencv-contrib-python-headless
 uvicorn==0.27.1
 yolov5==7.0.13
 python-multipart
+ultralytics
 
